@@ -6,16 +6,18 @@ import { router } from "expo-router";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonalInfo, PersonalInfoSchema } from "../../lib/types";
+import { useCheckoutForm } from "../../contexts/CheckoutFormProvider";
 
 export default function PersonalDetails() {
+  const { personalInfo, setPersonalInfo } = useCheckoutForm();
+
   const form = useForm<PersonalInfo>({
     resolver: zodResolver(PersonalInfoSchema),
+    defaultValues: personalInfo,
   });
-
-  console.log("Errors : ", form.formState.errors);
-
+  
   const onNext: SubmitHandler<PersonalInfo> = (data) => {
-    console.log(data);
+    setPersonalInfo(data);
     router.push("/checkout/payment");
   };
 

@@ -6,14 +6,18 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import CustomTextInput from "../../components/custom-text-input";
 import { PaymentInfo, PaymentInfoSchema } from "../../lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useCheckoutForm } from "../../contexts/CheckoutFormProvider";
 
 export default function Payment() {
+  const { paymentInfo, setPaymentInfo } = useCheckoutForm();
+
   const form = useForm<PaymentInfo>({
     resolver: zodResolver(PaymentInfoSchema),
+    defaultValues: paymentInfo,
   });
 
   const onNext: SubmitHandler<PaymentInfo> = (data) => {
-    console.log(data);
+    setPaymentInfo(data);
     router.push("/checkout/confirm");
   };
 
