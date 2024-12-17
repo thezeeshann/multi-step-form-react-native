@@ -5,7 +5,7 @@ export default function CheckoutLayout() {
     <Stack>
       <Stack.Screen name="personal" options={{ title: "Personal" }} />
       <Stack.Screen name="confirm" options={{ title: "Confirm" }} />
-      <Stack.Screen name="payment" options={{ title: "payment" }} />
+      <Stack.Screen name="payment" options={{ title: "Payment" }} />
     </Stack>
   );
 }
