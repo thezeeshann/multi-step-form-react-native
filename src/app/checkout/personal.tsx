@@ -7,6 +7,9 @@ import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonalInfo, PersonalInfoSchema } from "../../lib/types";
 import { useCheckoutForm } from "../../contexts/CheckoutFormProvider";
+import countries from "../../../assets/countries.json";
+import CustomPicker from "../../components/custom-picker";
+import CustomDateTimePicker from "../../components/customdate-time-picker";
 
 export default function PersonalDetails() {
   const { personalInfo, setPersonalInfo } = useCheckoutForm();
@@ -15,7 +18,7 @@ export default function PersonalDetails() {
     resolver: zodResolver(PersonalInfoSchema),
     defaultValues: personalInfo,
   });
-  
+
   const onNext: SubmitHandler<PersonalInfo> = (data) => {
     setPersonalInfo(data);
     router.push("/checkout/payment");
@@ -48,6 +51,18 @@ export default function PersonalDetails() {
             containerStyle={{ flex: 1 }}
           />
         </View>
+
+        <CustomPicker
+          name="country"
+          placeholder={{ label: "Select Country" }}
+          items={countries.map((country) => ({
+            label: country.name,
+            value: country.code,
+          }))}
+        />
+
+        <CustomDateTimePicker name="birthDate" />
+
         <CustomTextInput
           name="phone"
           label="Phone Number"
