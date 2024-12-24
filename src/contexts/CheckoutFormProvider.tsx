@@ -1,6 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { PaymentInfo, PersonalInfo } from "../lib/types";
 import { router } from "expo-router";
+import { storeData } from "../lib/store";
 
 type CheckoutFormContext = {
   personalInfo: PersonalInfo | undefined;
@@ -26,7 +27,10 @@ export default function CheckoutFormProvider({ children }: PropsWithChildren) {
     undefined
   );
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    if (personalInfo) {
+      await storeData("personal", personalInfo);
+    }
     setPaymentInfo(undefined);
     setPaymentInfo(undefined);
     router.dismissAll();
